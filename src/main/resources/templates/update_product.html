@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Edit product</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container" align="center">
+    <br/>
+    <form action="#" th:action="@{/save}" th:object="${product}" method="post">
+        <table class="table">
+            <caption>Update product</caption>
+            <tr hidden>
+                <td>id</td>
+                <td><input type="hidden" th:field="*{id}" readonly="readonly" /></td>
+            </tr>
+            <tr>
+                <td>UUID</td>
+                <td><input type="text" th:field="*{uuid}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" th:field="*{name}"/></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><input type="text" th:field="*{price}"/></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><input type="text" th:field="*{description}"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="button" type="submit">Save</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

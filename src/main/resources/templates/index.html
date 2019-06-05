@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org" lang="en">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student CRUD Operation</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container" align="center">
+    <table class="table">
+        <caption>List of all the products</caption>
+        <thead>
+        <tr>
+            <th>Universal ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Producer</th>
+            <th>Product description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${allProducts}">
+            <td th:text="${product.uuid}">Universal ID</td>
+            <td th:text="${product.name}">Name</td>
+            <td th:text="${product.price}">Price</td>
+            <td th:text="${product.producer}">Producer</td>
+            <td th:text="${product.description}">Product description</td>
+            <td>
+                <a class="button" th:href="@{'/update/' + ${product.uuid}}">Edit</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="button-delete" th:href="@{'/delete/' + ${product.uuid}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <a class="button" th:href="@{'/new'}">Create new product</a>
+</div>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+
+</body>
+</html>
