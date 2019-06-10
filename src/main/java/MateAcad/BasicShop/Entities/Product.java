@@ -17,27 +17,27 @@ import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Table (name = "products")
+@Table(name = "products")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors (chain = true)
-public class Product  extends CreatebleEntity {
+@Accessors(chain = true)
+public class Product extends CreatebleEntity {
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
     @Digits(fraction = 2, integer = 10)
-    @Column (name = "price")
+    @Column(name = "price")
     private BigDecimal price;
 
 
-    @Column (name = "description")
+    @Column(name = "description")
     private String description;
 
     @ManyToOne
-    @JoinColumn (name = "producers_id")
+    @JoinColumn(name = "producers_id")
     private Producer producer;
 }

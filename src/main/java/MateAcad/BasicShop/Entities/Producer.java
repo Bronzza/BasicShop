@@ -13,24 +13,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
-@Table (name = "producers")
+@Table(name = "producers")
 @Entity
 @Getter
 @Setter
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Accessors (chain = true)
+@Accessors(chain = true)
 public class Producer extends CreatebleEntity {
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
-    @OneToMany (mappedBy = "producer")
+    @OneToMany(mappedBy = "producer")
     private Set<Product> products;
 
     @Override
     public String toString() {
-        return  name;
+        return name;
     }
 }

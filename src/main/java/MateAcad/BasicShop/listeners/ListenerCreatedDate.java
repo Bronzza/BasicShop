@@ -10,6 +10,4 @@ public class ListenerCreatedDate {
     public void prePersist(CreatebleEntity entity) {
         entity.setCreatedDate(new Date().getTime());
     }
-
-
 }

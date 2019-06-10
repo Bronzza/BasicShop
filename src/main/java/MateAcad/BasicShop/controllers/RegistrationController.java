@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.Map;
 
@@ -30,19 +31,17 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, Map<String, Object> model) {
+    public String addUser(@Valid User user, Map<String, Object> model) {
         User userDataBase = userService.getByUserName(user.getUsername());
 
         if (userDataBase != null) {
             model.put("message", "User exists!");
             return "registration";
         }
-
-
+        System.out.println(user.getClass());
         user.setRoles(Collections.singleton(Role.USER));
         userService.saveUser(user);
-
-        return "redirect:/username";
+        return "redirect:/login";
     }
 }
 

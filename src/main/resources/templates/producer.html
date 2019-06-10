@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Create and add programmer</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container" align="center">
+    <br/>
+    <form action="#" th:action="@{/saveproducer}" th:object="${producer}" method="post">
+        <table class="table">
+            <caption>Create new producer</caption>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" th:field="*{name}"/></td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <button class="button" type="submit">Save</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

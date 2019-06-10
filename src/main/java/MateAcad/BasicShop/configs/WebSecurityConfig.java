@@ -20,52 +20,52 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-        private UserServiceImplementation userService;
+    private UserServiceImplementation userService;
 
-        @Bean
-        protected PasswordEncoder dummyPasswordEncoder() {
-            return new PasswordEncoder() {
+    @Bean
+    protected PasswordEncoder dummyPasswordEncoder() {
+        return new PasswordEncoder() {
 
-                @Override
-                public String encode(CharSequence rawPassword) {
-                    return rawPassword.toString();
-                }
-
-                @Override
-                public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                    return rawPassword.toString().equals(encodedPassword);
-                }
-            };
-        }
-
-        @Override
-        protected void configure(HttpSecurity http) {
-            try {
-                http
-                        .authorizeRequests()
-                        .antMatchers("/login", "/registration").permitAll()
-                        .anyRequest().authenticated()
-                        .and()
-                        .formLogin()
-                        .loginPage("/login")
-                        .permitAll()
-                        .and()
-                        .logout()
-                        .permitAll();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            @Override
+            public String encode(CharSequence rawPassword) {
+                return rawPassword.toString();
             }
+
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                return rawPassword.toString().equals(encodedPassword);
+            }
+        };
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) {
+        try {
+            http
+                    .authorizeRequests()
+                    .antMatchers("/login", "/registration").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .and()
+                    .logout()
+                    .permitAll();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
+    }
 
 
-        @Autowired
-        public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(userService)
-                    .passwordEncoder(dummyPasswordEncoder());
-        }
+    @Autowired
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService)
+                .passwordEncoder(dummyPasswordEncoder());
+    }
 
-        @Override
-        public void configure(WebSecurity web) throws Exception {
-            web.ignoring().antMatchers("/resources/**", "/templates/**", "/css/**");
-        }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**", "/templates/**", "/css/**");
+    }
 }

@@ -32,6 +32,17 @@
                 <td><input type="text" th:field="*{description}"/></td>
             </tr>
             <tr>
+                <td>Producer</td>
+                <td>
+                    <select th:field = "*{producer}">
+                        <option th:each="producer: ${producers}"
+                                th:value="${producer.id}"
+                                th:text="${producer.name}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td colspan="2">
                     <button class="button" type="submit">Save</button>
                 </td>

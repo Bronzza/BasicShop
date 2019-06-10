@@ -1,11 +1,11 @@
 package MateAcad.BasicShop.Entities;
 
 
-import MateAcad.BasicShop.Entities.parententities.UuidEntity;
 import MateAcad.BasicShop.enums.Role;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,28 +21,36 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
+@Accessors(chain = true)
 @Entity
-public class User extends UuidEntity implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "uuid", length = 45, unique = true, nullable = false)
+    private String uuid;
+
+    @NotBlank
     @Column(name = "username", nullable = false)
     private String username;
 
+    @NotBlank
     @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "firstname")
     private String firstname;
 
+    @NotBlank
     @Column(name = "surname")
     private String surname;
 
@@ -59,11 +67,6 @@ public class User extends UuidEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package MateAcad.BasicShop.services;
 
-
-
 import MateAcad.BasicShop.Entities.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -13,5 +11,5 @@ public interface UserService extends UserDetailsService {
 
     User getByUserName(String username);
 
-    void saveUser (User user);
+    void saveUser(User user);
 }

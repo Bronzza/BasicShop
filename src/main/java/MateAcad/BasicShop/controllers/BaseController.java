@@ -1,7 +1,9 @@
 package MateAcad.BasicShop.controllers;
 
 
+import MateAcad.BasicShop.Entities.Producer;
 import MateAcad.BasicShop.Entities.Product;
+import MateAcad.BasicShop.services.ProducerService;
 import MateAcad.BasicShop.services.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseController {
 
     private ProductService productService;
+
+    private ProducerService producerService;
 
     @RequestMapping("/")
     public String viewHomePage(Model model) {
@@ -32,7 +37,9 @@ public class BaseController {
     @RequestMapping("/new")
     public String createNewProductForm(@Valid Model model) {
         Product product = new Product();
+        Set<Producer> allUniqueProducers = producerService.findAllUniqueProducers();
         model.addAttribute("product", product);
+        model.addAttribute("producers", allUniqueProducers);
         return "product";
     }
 
@@ -46,6 +53,8 @@ public class BaseController {
     public ModelAndView editStudentForm(@PathVariable(name = "uuid") String uuid) {
         ModelAndView modelAndView = new ModelAndView("update_product");
         Product product = productService.getProductByUUID(uuid).get();
+        Set<Producer> allUniqueProducers = producerService.findAllUniqueProducers();
+        modelAndView.addObject("producers", allUniqueProducers);
         modelAndView.addObject("product", product);
         return modelAndView;
     }
