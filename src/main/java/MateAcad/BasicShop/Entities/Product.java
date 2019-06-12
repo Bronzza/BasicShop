@@ -2,6 +2,7 @@ package MateAcad.BasicShop.Entities;
 
 import MateAcad.BasicShop.Entities.parententities.CreatebleEntity;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode (callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
