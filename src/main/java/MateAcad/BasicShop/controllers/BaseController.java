@@ -3,6 +3,7 @@ package MateAcad.BasicShop.controllers;
 
 import MateAcad.BasicShop.Entities.Producer;
 import MateAcad.BasicShop.Entities.Product;
+import MateAcad.BasicShop.dto.ProducerDto;
 import MateAcad.BasicShop.services.ProducerService;
 import MateAcad.BasicShop.services.ProductService;
 import lombok.AllArgsConstructor;
@@ -38,8 +39,10 @@ public class BaseController {
     public String createNewProductForm(@Valid Model model) {
         Product product = new Product();
         Set<Producer> allUniqueProducers = producerService.findAllUniqueProducers();
+        Set<ProducerDto> allUnuqueProducersDto = producerService.findAllUniqueProducersDto();
         model.addAttribute("product", product);
-        model.addAttribute("producers", allUniqueProducers);
+//        model.addAttribute("producers", allUniqueProducers);
+        model.addAttribute("producers", allUnuqueProducersDto);
         return "product";
     }
 
