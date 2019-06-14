@@ -12,10 +12,10 @@ import java.util.List;
 @Component
 public interface ProducerMapper {
 
-    Producer mapProducerDtoToProducer (ProducerDto producerDto);
+    Producer mapProducerDtoToProducer(ProducerDto producerDto);
 
     @Mapping(target = "id", source = "id")
-    ProducerDto mapProducerToProducerDto (Producer producer);
+    ProducerDto mapProducerToProducerDto(Producer producer);
 
-    List<ProducerDto> mapProducersToDtos (List<Producer> producers);
+    List<ProducerDto> mapProducersToDtos(List<Producer> producers);
 }

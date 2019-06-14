@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode (callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProducerDto extends BaseEntityDto {
