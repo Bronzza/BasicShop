@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
@@ -12,7 +13,12 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 public class ProductDto extends BaseEntityDto {
+
+    private Long id;
+
+    private String Uuid;
 
     private String name;
 
@@ -20,5 +26,5 @@ public class ProductDto extends BaseEntityDto {
 
     private String description;
 
-    private Producer producer;
+    private ProducerDto producer;
 }

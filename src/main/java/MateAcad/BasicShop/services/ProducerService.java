@@ -16,21 +16,19 @@ import java.util.Set;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProducerService {
 
-    private ProducerRepository repository;
+    private final ProducerRepository repository;
 
-//    private ProducerMapper mapper;
-
-    private final ProducerMapper mapper;
+    private final ProducerMapper producerMapper;
 
     public Set<Producer> findAllUniqueProducers() {
         return new HashSet<>(repository.findAll());
     }
 
     public Set<ProducerDto> findAllUniqueProducersDto(){
-      return  new HashSet<>(mapper.mapProducersToDtos(repository.findAll())) ;
+      return  new HashSet<>(producerMapper.mapProducersToDtos(repository.findAll())) ;
     }
 
     public void saveProducer(ProducerDto producerDto) {
-        repository.save(mapper.mapProducerDtoToProducer(producerDto));
+        repository.save(producerMapper.toProducer(producerDto));
     }
 }

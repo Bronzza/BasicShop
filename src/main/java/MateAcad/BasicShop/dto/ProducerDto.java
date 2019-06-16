@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.Set;
 
@@ -11,9 +12,14 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors (chain = true)
 public class ProducerDto extends BaseEntityDto {
+
+    private Long id;
+
+    private String uuid;
 
     private String name;
 
-    private Set<ProductDto> products;
+    private Set<String> products;
 }

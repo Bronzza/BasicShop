@@ -2,6 +2,7 @@ package MateAcad.BasicShop.Entities.parententities;
 
 import MateAcad.BasicShop.listeners.ListenerCreatedDate;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -9,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 
 @Setter
 @MappedSuperclass
+@Accessors(chain = true)
 @EntityListeners(value = ListenerCreatedDate.class)
 public class CreatebleEntity extends UuidEntity {
 

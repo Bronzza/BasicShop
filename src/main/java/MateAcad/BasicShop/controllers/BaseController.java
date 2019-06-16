@@ -4,6 +4,7 @@ package MateAcad.BasicShop.controllers;
 import MateAcad.BasicShop.Entities.Producer;
 import MateAcad.BasicShop.Entities.Product;
 import MateAcad.BasicShop.dto.ProducerDto;
+import MateAcad.BasicShop.dto.ProductDto;
 import MateAcad.BasicShop.services.ProducerService;
 import MateAcad.BasicShop.services.ProductService;
 import lombok.AllArgsConstructor;
@@ -37,8 +38,7 @@ public class BaseController {
 
     @RequestMapping("/new")
     public String createNewProductForm(@Valid Model model) {
-        Product product = new Product();
-        Set<Producer> allUniqueProducers = producerService.findAllUniqueProducers();
+        ProductDto product = new ProductDto();
         Set<ProducerDto> allUnuqueProducersDto = producerService.findAllUniqueProducersDto();
         model.addAttribute("product", product);
 //        model.addAttribute("producers", allUniqueProducers);
@@ -47,18 +47,18 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveProduct(@Valid @ModelAttribute("product") Product product) {
-        productService.saveProduct(product);
+    public String saveProduct(@Valid @ModelAttribute("product") ProductDto productDto) {
+        productService.saveProduct(productDto);
         return "redirect:/";
     }
 
     @RequestMapping("/update/{uuid}")
     public ModelAndView editStudentForm(@PathVariable(name = "uuid") String uuid) {
         ModelAndView modelAndView = new ModelAndView("update_product");
-        Product product = productService.getProductByUUID(uuid).get();
-        Set<Producer> allUniqueProducers = producerService.findAllUniqueProducers();
+        ProductDto productDto = productService.getDtoByUUID(uuid).get();
+        Set<ProducerDto> allUniqueProducers = producerService.findAllUniqueProducersDto();
         modelAndView.addObject("producers", allUniqueProducers);
-        modelAndView.addObject("product", product);
+        modelAndView.addObject("product", productDto);
         return modelAndView;
     }
 
