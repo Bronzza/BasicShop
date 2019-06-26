@@ -1,49 +1,40 @@
 package MateAcad.BasicShop.dto;
 
-
 import MateAcad.BasicShop.Entities.Producer;
+import MateAcad.BasicShop.repositories.ProductRepository;
+import MateAcad.BasicShop.services.ProductService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-@Component
-public class ProducerMapper {
+@AllArgsConstructor
+@Data
+@RequiredArgsConstructor
+@Mapper (componentModel = "cdi", uses = ProductService.class, injectionStrategy = InjectionStrategy.FIELD)
+public abstract class ProducerMapper {
 
     @Autowired
-    private ProductMapper productMapper;
+    private ProductService productService;
 
-    public Producer toProducer(ProducerDto producerDto) {
-        Producer producer = new Producer();
-        producer.setName(producerDto.getName());
-        if (Objects.nonNull(producerDto.getId())) {
-            producer.setId(producerDto.getId());
-        }
-        if (Objects.nonNull(producerDto.getUuid())) {
-            producer.setUuid(producerDto.getUuid());
-        }
-        return Objects.nonNull(producerDto.getProducts()) ?
-                producer.setProducts(productMapper.toProductsFromUuid(producerDto.getProducts())) : producer;
-    }
+    @Mapping(target = "products",
+            expression = "java(producer.getProducts().stream().map(Product::getUuid).collect(Collectors.toSet())")
+    @Mapping(target = "createdDate", expression = "java(new java.util.Date(producer.getCreatedDate()))")
+   abstract public ProducerDto toProducerDto(Producer producer);
 
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "products", expression = "java(producerDto.getProducts().stream().map(uuid ->productService.getProductbyUuid(uuid).get)" +
+            ".collect(Collectors.toSet()))")
+  abstract   public Producer toProducer(ProducerDto producerDto);
 
-    public ProducerDto toProducerDto(Producer producer) {
-        ProducerDto producerDto = new ProducerDto();
-        if (Objects.nonNull(producer.getCreatedDate())) {
-            producerDto.setCreatedDate(new Date(producer.getCreatedDate()));
-        }
-        return producerDto.setId(producer.getId())
-                .setUuid(producer.getUuid())
-                .setName(producer.getName())
-                .setProducts(productMapper.toUuidProducts(producer.getProducts()));
-    }
-
-    public List<ProducerDto> mapProducersToDtos(List<Producer> producers) {
-        return producers.stream()
-                .map(this::toProducerDto)
-                .collect(Collectors.toList());
-    }
+   abstract public Set<ProducerDto> mapProducersToDtos(List<Producer> producers);
 }
