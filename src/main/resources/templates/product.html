@@ -25,7 +25,14 @@
             </tr>
             <tr>
                 <td>Producer</td>
-                <td><input type="text" th:field="*{producer}"/></td>
+                <td>
+                <select th:field = "*{producer.id}">
+                    <option th:each="producer: ${producers}"
+                            th:value="${producer.id}"
+                            th:text="${producer.name}">
+                    </option>
+                </select>
+                </td>
             </tr>
 
             <tr>
