@@ -1,41 +1,47 @@
 package MateAcad.BasicShop.dto;
 
 import MateAcad.BasicShop.Entities.Product;
-import MateAcad.BasicShop.services.ProductService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import MateAcad.BasicShop.repositories.ProducerRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
+import java.util.Objects;
 
-@AllArgsConstructor
-@Data
-@RequiredArgsConstructor
-@Mapper (unmappedSourcePolicy = ReportingPolicy.IGNORE,
-        componentModel = "spring",
-        uses = ProducerMapper.class,
-        injectionStrategy = InjectionStrategy.FIELD)
-public abstract class ProductMapper {
+@Component
+public class ProductMapper  extends AbstractMapper <Product, ProductDto>{
+
+    private final ModelMapper modelMapper;
+
+    private final ProducerRepository producerRepository;
 
     @Autowired
-    private ProductService productService;
+    public ProductMapper(ModelMapper mapper, ProducerRepository repository) {
+        super(Product.class, ProductDto.class);
+        modelMapper = mapper;
+        producerRepository = repository;
+    }
 
-    @Mapping(target = "createdDate", expression = "java(new Date(createdDate))")
-    @Mapping(target = "producer.createdDate", expression = "java(new Date(createdDate))")
-    @Mapping(target = "producer.products", expression = "java(products.stream().map(product ->product.getUuid())" +
-            ".get()).collect(Collectors.toSet()))")
-    abstract ProductDto toProductDto (Product product);
+    @PostConstruct
+    public void setMapper(){
+        modelMapper.createTypeMap(Product.class, ProductDto.class)
+                .addMappings(m -> m.skip(ProductDto::setProducerId)).setPostConverter(toDtoConverter());
+        modelMapper.createTypeMap(ProductDto.class, Product.class)
+                .addMappings(m -> m.skip(Product:: setProducer)).setPostConverter(toEntityConverter());
+    }
 
-    @Mapping(target = "createdDate", ignore = true)
-    @Mapping(target = "producer.createdDate", ignore = true)
-    @Mapping(target = "producer.products", expression = "java(producerDto.products.stream().map(uuid ->productService.getProductByUUID(uuid)" +
-            ".get()).collect(Collectors.toSet()))")
-    abstract Product toProduct (ProductDto productDto);
+    @Override
+    protected void mapSpecificFields(ProductDto source, Product destination) {
+        destination.setProducer(producerRepository.findById(source.getProducerId()).orElse(null));
+    }
 
-   abstract List<ProductDto> toListOfProductDto (List<Product> products);
+    @Override
+    protected void mapSpecificFields(Product source, ProductDto destination) {
+        destination.setProducerId(getId(source));
+    }
+
+    private Long getId(Product source) {
+        return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getProducer().getId();
+    }
 }

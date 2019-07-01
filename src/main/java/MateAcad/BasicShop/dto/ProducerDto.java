@@ -21,5 +21,5 @@ public class ProducerDto extends BaseEntityDto {
 
     private String name;
 
-    private Set<String> products;
+    private Set<ProductDto> products;
 }

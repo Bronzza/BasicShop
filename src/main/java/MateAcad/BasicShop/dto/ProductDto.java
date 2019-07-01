@@ -26,5 +26,5 @@ public class ProductDto extends BaseEntityDto {
 
     private String description;
 
-    private ProducerDto producer;
+    private Long producerId;
 }

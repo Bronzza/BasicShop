@@ -21,14 +21,14 @@ public class ProducerService {
 
     private final ProducerRepository repository;
 
-    private final ProducerMapper producerMapper;
+    private ProducerMapper producerMapper;
 
     public Set<Producer> findAllUniqueProducers() {
         return new HashSet<>(repository.findAll());
     }
 
     public Set<ProducerDto> findAllUniqueProducersDto() {
-        return new HashSet<>(producerMapper.mapProducersToDtos(repository.findAll()));
+        return /*new HashSet<>(producerMapper.toDto(repository.findAll()));*/null;
     }
 
     public void saveProducer(ProducerDto producerDto) {
