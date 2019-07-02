@@ -1,21 +1,17 @@
 package MateAcad.BasicShop.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors (chain = true)
 public class ProducerDto extends BaseEntityDto {
-
-    private Long id;
 
     private String uuid;
 

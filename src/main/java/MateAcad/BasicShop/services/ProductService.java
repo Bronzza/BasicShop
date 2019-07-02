@@ -33,11 +33,11 @@ public class ProductService {
     }
 
     public Optional<ProductDto> getDtoByUUID(String uuid) {
-        return Optional.of(productMapper.toProductDto(repository.findByUuid(uuid)));
+        return Optional.of(productMapper.toDto(repository.findByUuid(uuid)));
     }
 
     public void saveProduct(ProductDto productDto) {
-        repository.save(productMapper.toProduct(productDto));
+        repository.save(productMapper.toEntity(productDto));
     }
 
     public void deleteByUUID(String uuid) {

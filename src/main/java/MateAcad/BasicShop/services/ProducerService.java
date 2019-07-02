@@ -21,18 +21,21 @@ public class ProducerService {
 
     private final ProducerRepository repository;
 
-    private ProducerMapper producerMapper;
+    private final ProducerMapper producerMapper;
 
     public Set<Producer> findAllUniqueProducers() {
         return new HashSet<>(repository.findAll());
     }
 
     public Set<ProducerDto> findAllUniqueProducersDto() {
-        return /*new HashSet<>(producerMapper.toDto(repository.findAll()));*/null;
+        return repository.findAll()
+                .stream()
+                .map(producerMapper::toDto)
+                .collect(Collectors.toSet());
     }
 
     public void saveProducer(ProducerDto producerDto) {
-        repository.save(producerMapper.toProducer(producerDto));
+        repository.save(producerMapper.toEntity(producerDto));
         List<Producer> producers = repository.findAll();
         producers.stream().map(BaseEntity::getId).collect(Collectors.toList());
 

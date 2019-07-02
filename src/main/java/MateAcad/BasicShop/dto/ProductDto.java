@@ -16,8 +16,6 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 public class ProductDto extends BaseEntityDto {
 
-    private Long id;
-
     private String Uuid;
 
     private String name;

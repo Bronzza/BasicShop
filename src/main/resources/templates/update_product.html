@@ -34,7 +34,7 @@
             <tr>
                 <td>Producer</td>
                 <td>
-                    <select th:field = "*{producer.id}">
+                    <select th:field = "*{producerId}">
                         <option th:each="producer: ${producers}"
                                 th:value="${producer.id}"
                                 th:text="${producer.name}">

@@ -1,13 +1,16 @@
 package MateAcad.BasicShop.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
 
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BaseEntityDto implements Serializable {
 
     private Long id;
